@@ -1,0 +1,1 @@
+cd src && sanic app.app --debug

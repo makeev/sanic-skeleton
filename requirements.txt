@@ -1,0 +1,2 @@
+sanic==20.12.1
+tortoise-orm[asyncpg]==0.16.21
