@@ -1,14 +1,14 @@
-from sanic import Sanic, response
+from sanic import response
+
+from app import get_app
 from project.tasks import sleepy_task
 
 
-app = Sanic.get_app("project")
+app = get_app()
 
 
 async def home_view(request) -> response.HTTPResponse:
-    return response.json({
-        "DB_NAME": app.config.DB_NAME
-    })
+    return response.json(app.config)
 
 
 async def test_view(request, param):

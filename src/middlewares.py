@@ -1,6 +1,6 @@
-from sanic import Sanic
+from app import get_app
 
-app = Sanic.get_app("project")
+app = get_app()
 
 
 @app.middleware("request")

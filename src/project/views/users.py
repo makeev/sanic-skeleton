@@ -1,8 +1,10 @@
-from sanic import Sanic, response
+from sanic import response
 from sanic.views import HTTPMethodView
+
+from app import get_app
 from project.models import User
 
-app = Sanic.get_app("project")
+app = get_app()
 
 
 class UsersView(HTTPMethodView):
