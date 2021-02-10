@@ -1,0 +1,6 @@
+-- upgrade --
+ALTER TABLE "user" ADD "created_at" TIMESTAMPTZ NOT NULL  DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE "user" ADD "updated_at" TIMESTAMPTZ NOT NULL  DEFAULT CURRENT_TIMESTAMP;
+-- downgrade --
+ALTER TABLE "user" DROP COLUMN "created_at";
+ALTER TABLE "user" DROP COLUMN "updated_at";

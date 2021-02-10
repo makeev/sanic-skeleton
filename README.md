@@ -12,3 +12,30 @@ or
 cd src
 sanic --debug app.app
 ```
+
+## DB migrations
+
+Upgrade to latest version
+```
+aerich upggrade
+```
+Downgrade to specified version
+```
+Usage: aerich downgrade [OPTIONS]
+
+  Downgrade to specified version.
+
+Options:
+  -v, --version INTEGER  Specified version, default to last.  [default: -1]
+  -h, --help             Show this message and exit.
+> aerich downgrade
+
+Success downgrade 1_202029051520102929_drop_column.json
+```
+
+Create new migration
+```
+> aerich migrate --name user_drop_column
+
+Success migrate 1_202029051520102929_user_drop_column.json
+```

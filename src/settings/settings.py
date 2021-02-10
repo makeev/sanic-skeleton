@@ -21,13 +21,14 @@ TORTOISE_ORM = {
                 "database": DB_NAME
             },
             "minsize": 1,
-            "maxsize": 1
+            "maxsize": 5
         }
     },
     "apps": {
         "models": {
             "models": [
                 "project.models",
+                "aerich.models",
             ],
             "default_connection": "default",
         },
@@ -39,7 +40,7 @@ TORTOISE_ORM = {
 REDIS_URL = 'redis://localhost'
 
 # create empty database on init
-GENERATE_SCHEMAS = True
+GENERATE_SCHEMAS = False
 
 # STATIC
 STATIC_URL = '/static'
