@@ -39,3 +39,10 @@ Create new migration
 
 Success migrate 1_202029051520102929_user_drop_column.json
 ```
+
+
+## swagger docs
+
+based on https://sanic-openapi.readthedocs.io/en/stable/
+
+http://127.0.0.1:8000/swagger/
