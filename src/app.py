@@ -1,9 +1,12 @@
+import aioredis
+
 import settings
 from sanic import Sanic
 from sanic.log import logger
 from tortoise.contrib.sanic import register_tortoise
 from sanic_openapi import swagger_blueprint
 
+from utils import register_redis
 
 APP_NAME = "project"
 app = Sanic(APP_NAME, strict_slashes=True)
@@ -23,11 +26,13 @@ app.static(settings.STATIC_URL, settings.STATIC_PATH)
 # ORM and database init
 register_tortoise(app, settings.TORTOISE_ORM, generate_schemas=settings.GENERATE_SCHEMAS)
 
+# register redis
+register_redis(app, settings.REDIS_URL, minsize=1, maxsize=10)
+
 # load middlewares
 import middlewares
 
 # load routing
 import urls
-
 
 logger.info('app initialized')

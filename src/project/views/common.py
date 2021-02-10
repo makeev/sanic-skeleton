@@ -3,7 +3,6 @@ from sanic import response
 from app import get_app
 from project.tasks import sleepy_task
 
-
 app = get_app()
 
 
