@@ -1,17 +1,20 @@
+from pydantic.schema import ROOT_KEY
 from sanic import response
 from sanic.views import HTTPMethodView
 from sanic_openapi import doc
 
 from app import get_app
 from project.models import User
+from project.serializers import UsersListSerializer, FullUserSerializer
 
 app = get_app()
 
 
 class UsersView(HTTPMethodView):
     async def get(self, request):
-        users = await User.all()
-        return response.json([{"id": u.id, "name": u.name} for u in users])
+        queryset = User.all()
+        users = await UsersListSerializer.from_queryset(queryset)
+        return response.json(users.dict()[ROOT_KEY])
 
     @doc.consumes(
         doc.String(name="name"),
@@ -24,4 +27,6 @@ class UsersView(HTTPMethodView):
         )
         await user.save()
 
-        return response.json({"id": user.id}, status=201)
+        user = await FullUserSerializer.from_tortoise_orm(user)
+
+        return response.json(user.dict(), status=201)
