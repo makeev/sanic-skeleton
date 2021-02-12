@@ -3,7 +3,7 @@ from sanic import response
 from sanic.response import HTTPResponse
 from sanic.views import HTTPMethodView
 from sanic_openapi import doc
-from webargs import fields
+from webargs import fields, validate
 
 from app import get_app
 from project.models import User
@@ -39,7 +39,10 @@ class UsersView(HTTPMethodView):
         content_type="multipart/form-data"
     )
     @use_kwargs({
-        "name": fields.String(required=True, validate=lambda s: len(s) > 3),
+        "name": fields.String(
+            required=True,
+            validate=[validate.Length(min=4), lambda s: s != "Vasya"]
+        ),
     }, location='form')
     async def post(self, request, name):
         user = User(
