@@ -39,7 +39,7 @@ class UsersView(HTTPMethodView):
         content_type="multipart/form-data"
     )
     @use_kwargs({
-        "name": fields.String(required=True),
+        "name": fields.String(required=True, validate=lambda s: len(s) > 3),
     }, location='form')
     async def post(self, request, name):
         user = User(
