@@ -1,30 +1,15 @@
-from pydantic.schema import ROOT_KEY
-from sanic import response
 from sanic.response import HTTPResponse
 from sanic.views import HTTPMethodView
 from sanic_openapi import doc
 from webargs import fields, validate
 
 from app import get_app
+from helpers import raw_json
 from project.models import User
 from project.serializers import UsersListSerializer, FullUserSerializer
 from validation import use_kwargs
 
 app = get_app()
-
-
-def raw_json(
-        body,
-        status=200,
-        headers=None,
-        content_type="application/json",
-):
-    return HTTPResponse(
-        body,
-        headers=headers,
-        status=status,
-        content_type=content_type,
-    )
 
 
 class UsersView(HTTPMethodView):

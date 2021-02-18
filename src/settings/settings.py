@@ -8,6 +8,14 @@ DB_HOST = os.getenv('DB_HOST', 'localhost')
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME")
 
+PG_MIN_POOL_SIZE = int(os.getenv('PG_MIN_POOL_SIZE', 1))
+PG_MAX_POOL_SIZE = int(os.getenv('PG_MIN_POOL_SIZE', 10))
+
+REDIS_MIN_POOL_SIZE = int(os.getenv('REDIS_MIN_POOL_SIZE', 1))
+REDIS_MAX_POOL_SIZE = int(os.getenv('REDIS_MAX_POOL_SIZE', 10))
+
+AUTH_TOKEN = None
+
 # DB
 TORTOISE_ORM = {
     "connections": {
@@ -20,8 +28,8 @@ TORTOISE_ORM = {
                 "port": DB_PORT,
                 "database": DB_NAME
             },
-            "minsize": 1,
-            "maxsize": 5
+            "minsize": PG_MIN_POOL_SIZE,
+            "maxsize": PG_MAX_POOL_SIZE
         }
     },
     "apps": {
