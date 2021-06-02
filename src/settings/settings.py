@@ -53,3 +53,7 @@ GENERATE_SCHEMAS = False
 # STATIC
 STATIC_URL = '/static'
 STATIC_PATH = 'src/static/'
+
+# mongo
+MONGO_URI = ''
+MONGO_DB = ''

@@ -1,4 +1,6 @@
-from sanic.response import HTTPResponse
+from datetime import datetime
+
+from sanic import response
 from sanic.views import HTTPMethodView
 from sanic_openapi import doc
 from webargs import fields, validate
@@ -6,7 +8,6 @@ from webargs import fields, validate
 from app import get_app
 from helpers import raw_json
 from project.models import User
-from project.serializers import UsersListSerializer, FullUserSerializer
 from validation import use_kwargs
 
 app = get_app()
@@ -14,9 +15,12 @@ app = get_app()
 
 class UsersView(HTTPMethodView):
     async def get(self, request):
-        queryset = User.all()
-        users = await UsersListSerializer.from_queryset(queryset)
-        return raw_json(users.json())
+        cursor = User.find()
+        users = []
+
+        async for doc in cursor:
+            users.append(doc.dump())
+        return response.json(users)
 
     @doc.consumes(
         doc.String(name="name"),
@@ -31,10 +35,9 @@ class UsersView(HTTPMethodView):
     }, location='form')
     async def post(self, request, name):
         user = User(
-            name=name
+            name=name,
+            created_at=datetime.now(),
         )
-        await user.save()
+        await user.commit()
 
-        user = await FullUserSerializer.from_tortoise_orm(user)
-
-        return raw_json(user.json(), status=201)
+        return response.json(user.dump(), status=201)

@@ -1,11 +1,16 @@
-from tortoise import Model, fields
+from umongo import Document, fields
+
+from app import get_app
+
+app = get_app()
 
 
-class User(Model):
-    name = fields.CharField(max_length=100)
+@app.ctx.umongo.register
+class User(Document):
+    name = fields.StringField()
 
-    created_at = fields.DatetimeField(auto_now_add=True)
-    updated_at = fields.DatetimeField(auto_now=True)
+    created_at = fields.DateTimeField()
+    updated_at = fields.DateTimeField()
 
-    def __str__(self):
-        return self.name
+    class Meta:
+        collection_name = 'users'
