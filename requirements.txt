@@ -6,3 +6,4 @@ pydantic
 aerich
 webargs-sanic==2.0.0
 marshmallow==3.12.1
+umongo[motor]
